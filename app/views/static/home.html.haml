@@ -1,0 +1,48 @@
+.row
+  .span12
+    %h1 Cuz, your stuff should be your stuff...
+.row#hero
+  .span4
+    .row.step
+      .span4
+        %h2 Step 1. Cut a hole in the box
+        - if !@db_client.present?
+          =link_to('Connect to Dropbox','/oauth/connect_to_dropbox', class: "btn btn-primary")
+        - else
+          %p.text-success Dropbox Connected :)
+  .span4
+    .row.step
+      .span4
+        %h2 Step 2. Put your junk in that box
+        - if session[:instagram_id].blank? && @db_client.present?
+          =link_to('Connect to Instagram','/oauth/connect_to_instagram', class: "btn btn-primary")
+        - elsif session[:instagram_id].present?
+          %p.text-success Instagram Connected :)
+  .span4
+    .row.step
+      .span4
+        %h2 Step 3. Make her open the box
+        - if @user && @user.instagram_id && @user.dropbox_access_token && @user.email.blank?
+          .row
+            .span4#email-form
+              -if @user
+                =form_tag(user_url(@user),method: :put,class:"form-inline") do
+
+                  =text_field_tag("user[email]",nil,class:"input-large",placeholder: "Email")
+                  %button.btn.btn-primary{type:"submit"} Save
+                %p I'll never use your email address for evil.
+        - elsif @user
+          %p.text-success Yabble Dabble! You should start seeing your photos appear in your Dropbox
+          
+          =image_tag('finder.png')
+
+          %a.twitter-share-button{"data-hashtags" => "myshit", "data-related" => "boxtagramapp", "data-size" => "large", "data-text" => "I just backed up my @instagram pictures to my @dropbox with @boxtagramapp", "data-via" => "boxtagramapp", :href => "https://twitter.com/share"} Tweet
+          :javascript
+            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+.row
+  .span12
+    %h2 #{Settings.app_name} is a work in progress.
+    %h3 TODO
+    %ul
+      %li Email Notifications when done
+      %li Scale up to support lots of people that feel buggered by Instagram

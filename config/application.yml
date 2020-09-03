@@ -1,0 +1,29 @@
+defaults: &defaults
+  app_name: Boxtagram
+  dropbox:
+    key: ${{DROPBOX_KEY}}
+    secret: ${{DROPBOX_SECRET}}
+    callback: http://www.boxtagram.com/oauth/dropbox
+    mode: sandbox
+  instagram:
+    key: ${{INSTAGRAM_KEY}}
+    secret: ${{INSTAGRAM_SECRET}}
+    callback: http://www.boxtagram.com/oauth/instagram
+
+development:
+  <<: *defaults
+  dropbox:
+    key: ${{DROPBOX_KEY_DEVELOPMENT}}
+    secret: ${{DROPBOX_SECRET_DEVELOPMENT}}
+    callback: http://web1.tunnlr.com:12668/oauth/dropbox
+    mode: sandbox
+  instagram:
+    key: ${{INSTAGRAM_KEY_DEVELOPMENT}}
+    secret: ${{INSTAGRAM_SECRET_DEVELOPMENT}}
+    callback: http://web1.tunnlr.com:12668/oauth/instagram
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

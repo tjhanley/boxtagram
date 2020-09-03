@@ -1,0 +1,25 @@
+common: &common
+  adapter: postgresql
+  host: localhost
+  username: tom
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *common
+  database: boxtergram_development
+
+test:
+  <<: *common
+  database: boxtergram_test
+
+production:
+  <<: *common
+  adapter:  postgresql
+  encoding: unicode
+  pool: 5
+  database: ${{DB_NAME}}
+  username: ${{DB_USERNAME}}
+  password: ${{DB_PASSWORD}}
+  host: ${{DB_HOST}}
+  port: 5432
